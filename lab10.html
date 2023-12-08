@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Гра "Однорукий бандит"</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    main {
+      text-align: center;
+    }
+    h1 {
+      font-size: 2em;
+    }
+    .slot-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+      border: 2px solid #333;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .fruit-slot {
+      width: 100px;
+      height: 100px;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+      border-radius: 5px;
+    }
+    .slot {
+      margin: 0 10px;
+    }
+    #spin-btn {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin-top: 20px;
+      cursor: pointer;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    #spin-btn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Гра "Однорукий бандит"</h1>
+    <p id="user-name"></p>
+    <div class="slot-container">
+      <div class="slot fruit-slot" id="slot1"></div>
+      <div class="slot fruit-slot" id="slot2"></div>
+      <div class="slot fruit-slot" id="slot3"></div>
+      <div class="slot fruit-slot" id="slot4"></div>
+      <div class="slot fruit-slot" id="slot5"></div>
+      <div class="slot fruit-slot" id="slot6"></div>
+      <div class="slot fruit-slot" id="slot7"></div>
+      <div class="slot fruit-slot" id="slot8"></div>
+      <div class="slot fruit-slot" id="slot9"></div>
+    </div>
+    <button id="spin-btn">Обертати</button>
+  </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var playerName = prompt('Введіть ім\'я гравця:');
+      document.getElementById('user-name').textContent = 'Привіт, ' + playerName + '!';
+      var slots = document.querySelectorAll('.fruit-slot');
+      var spinBtn = document.getElementById('spin-btn');
+      spinBtn.addEventListener('click', function () {
+        slots.forEach(function(slot) {
+          var randomImage = getRandomImage();
+          slot.style.backgroundImage = 'url(' + randomImage + ')';
+        });
+        if (checkWin()) {
+          alert('Вітаємо, ви виграли!');
+        }
+      });
+      function checkWin() {
+        var firstImage = slots[0].style.backgroundImage;
+        return Array.from(slots).every(function(slot) {
+          return slot.style.backgroundImage === firstImage;
+        });
+      }
+      function getRandomImage() {
+        var images = [
+          '1.png',
+          '2.png',
+          '3.png',
+        ];
+        return images[Math.floor(Math.random() * images.length)];
+      }
+    });
+  </script>
+</body>
+</html>

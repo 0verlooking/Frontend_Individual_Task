@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="utf-8">
+	  <title>Динамічна вебсторінка</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #74992e;
+    }
+
+    #magicBall {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background-color: #3498db;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000000;
+      font-size: 24px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="magicBall" onclick="shakeMagicBall()">Click me!</div>
+
+  <script>
+    function shakeMagicBall() {
+      document.getElementById('magicBall').innerHTML = '';
+
+      const answers = [
+        'Так',
+        'Ні',
+        'Можливо',
+        'Не розраховуй на це',
+        'Шанси високі',
+        'Шанси низькі',
+        'Спробуй пізніше',
+        'Не можу відповісти зараз'
+      ];
+
+      const randomIndex = Math.floor(Math.random() * answers.length);
+      const randomAnswer = answers[randomIndex];
+
+      document.getElementById('magicBall').innerText = randomAnswer;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Гра "В кого більше число"</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #game-title,
+        #game-container,
+        #result {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #user,
+        #computer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #result {
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="game-title">Гра "В кого більше число"</h1>
+
+    <div id="game-container">
+        <div id="user">
+            <h2>Користувач</h2>
+            <p id="user-score">Рахунок: 0</p>
+        </div>
+
+        <button id="play-button" onclick="playRound()">Грати</button>
+
+        <div id="computer">
+            <h2>Комп'ютер</h2>
+            <p id="computer-score">Рахунок: 0</p>
+        </div>
+    </div>
+
+    <p id="result"></p>
+
+    <script>
+        let userScore = 0;
+        let computerScore = 0;
+        const roundsToWin = 3;
+
+        const isUserRegistered = sessionStorage.getItem('isUserRegistered');
+
+        if (!isUserRegistered) {
+            registerUser();
+        }
+
+        function registerUser() {
+            const userName = prompt("Будь ласка, введіть своє ім'я:");
+
+            if (userName) {
+                sessionStorage.setItem('isUserRegistered', 'true');
+            }
+        }
+
+        function generateRandomNumber() {
+            return Math.floor(Math.random() * 10) + 1;
+        }
+
+        function playRound() {
+            const userNumber = generateRandomNumber();
+            const computerNumber = generateRandomNumber();
+
+            updateScores(userNumber, computerNumber);
+        }
+
+        function updateScores(userNumber, computerNumber) {
+            const resultElement = document.getElementById('result');
+            const userScoreElement = document.getElementById('user-score');
+            const computerScoreElement = document.getElementById('computer-score');
+
+            resultElement.innerText = '';
+
+            if (isUserRegistered) {
+                const resultMessage = `Користувач: ${userNumber}\nКомп'ютер: ${computerNumber}`;
+                resultElement.innerText = resultMessage;
+
+                if (userNumber > computerNumber) {
+                    userScore++;
+                } else if (userNumber < computerNumber) {
+                    computerScore++;
+                }
+
+                userScoreElement.innerText = `Рахунок: ${userScore}`;
+                computerScoreElement.innerText = `Рахунок: ${computerScore}`;
+
+                if (userScore === roundsToWin || computerScore === roundsToWin) {
+                    showWinner();
+                }
+            }
+        }
+
+        function showWinner() {
+            const winner = userScore === roundsToWin ? "Користувач" : "Комп'ютер";
+            alert(`Гра завершена!\nПереміг: ${winner}`);
+            resetGame();
+        }
+
+        function resetGame() {
+            userScore = 0;
+            computerScore = 0;
+            document.getElementById('user-score').innerText = 'Рахунок: 0';
+            document.getElementById('computer-score').innerText = 'Рахунок: 0';
+        }
+    </script>
+</body>
+
+</html>
