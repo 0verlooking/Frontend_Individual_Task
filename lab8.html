@@ -70,7 +70,7 @@
         let computerScore = 0;
         const roundsToWin = 3;
 
-        const isUserRegistered = sessionStorage.getItem('isUserRegistered');
+        const isUserRegistered = localStorage.getItem('isUserRegistered');
 
         if (!isUserRegistered) {
             registerUser();
@@ -80,7 +80,7 @@
             const userName = prompt("Будь ласка, введіть своє ім'я:");
 
             if (userName) {
-                sessionStorage.setItem('isUserRegistered', 'true');
+                localStorage.setItem('isUserRegistered', 'true');
             }
         }
 
